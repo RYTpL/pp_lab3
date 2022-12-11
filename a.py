@@ -67,7 +67,7 @@ class Ui_MainWindow(QWidget):
         self.pushButton_3.clicked.connect(self.task2)
         self.pushButton_5.clicked.connect(self.task3)
         # tsaks-end
-        #self.pushButton_6.clicked.connect()
+        self.pushButton_6.clicked.connect(self.opensecondwindow)
 
     def get_directory(self):
         self.directory = QtWidgets.QFileDialog.getExistingDirectory(self, "Выбрать папку исходного датасета")
@@ -82,6 +82,87 @@ class Ui_MainWindow(QWidget):
 
     def task3(self):
         run3(self.directory, 'annotationTask3.csv', 'directorycopy')
+    
+    def opensecondwindow(self):
+        window = ClassWindow(self)
+        window.exec()
+
+class ClassWindow(QtWidgets.QDialog):
+    def __init__(self, parent=None):
+        super(ClassWindow, self).__init__(parent)
+        self.iter = Iterator("D:\\pp_lab3\\pp_lab3", "zebra", "dataset")
+        self.pixelmap = QPixmap('.jpg')
+        self.resize(900,1500)
+        self.gorizontalLayout = QtWidgets.QFormLayout(self)
+        self.gorizontalLayout.setObjectName("gorizontalLayout")
+        self.pushButton = QtWidgets.QPushButton(self)
+        self.pushButton.setObjectName("pushButton")
+        self.pushButton.setGeometry(QtCore.QRect(200, 200, 200, 50))
+        self.setLayout(self.gorizontalLayout)
+        self.setGeometry(400, 400, 400, 400)
+
+        self.pushButton_3 = QtWidgets.QPushButton(self)
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.pushButton_3.setGeometry(QtCore.QRect(200, 0, 200, 50))
+
+
+        self.gorizontalLayout.addWidget(self.pushButton)
+        self.setWindowTitle("ImageTask")
+        self.pushButton.setText("Next")
+        self.pushButton.clicked.connect(self.nextButton)
+        self.pushButton_3.setText("Close")
+        self.pushButton_3.clicked.connect(self.btnClosed)
+        self.gorizontalLayout.addWidget(self.pushButton_3)
+
+        pixmap = QPixmap("D:\\pp_lab3\\pp_lab3\\dataset\\zebra\\0015.jpg").scaledToHeight(400).scaledToWidth(400)
+        self.lable = QLabel(self)
+
+        self.lable.setPixmap(pixmap)
+
+        self.gorizontalLayout.addWidget(self.lable)
+
+        self.radio_button_1 = QRadioButton('zebra')
+        self.radio_button_1.setChecked(True)
+        self.radio_button_1.setAccessibleName("zebra")
+
+        self.radio_button_2 = QRadioButton('bay horse')
+        self.radio_button_2.setAccessibleName("bay horse")
+
+        self.gorizontalLayout.addWidget(self.radio_button_1)
+        self.gorizontalLayout.addWidget(self.radio_button_2)
+        self.radio_button_1.clicked.connect(self.clickButton)
+        self.radio_button_2.clicked.connect(self.clickButton)
+
+    def clickButton(self):
+        send = self.sender()
+        if send.text() == "zebra":
+            self.iter.setName(send.text())
+            self.iter.getName()
+        elif send.text() == "bay horse":
+            self.iter.setName(send.text())
+            self.iter.getName()
+    
+
+    def nextButton(self,) ->None:
+        try:
+            tmp = os.path.join(os.path.join(self.iter.base,self.iter.path,self.iter.name), self.iter.__next__())
+            print(tmp)
+            self.pixmap = QPixmap(f"{tmp}").scaledToWidth(400).scaledToHeight(400)
+            self.lable.setPixmap(self.pixmap)
+            print(tmp)
+        except:
+            reply = QMessageBox.question(self, 'End of img_class',
+                                         "empry, clear?", QMessageBox.Yes |
+                                         QMessageBox.No, QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                self.iter.clear()
+            print("Error")
+
+
+    def btnClosed(self):
+        self.close()
+
+
 
 
 if __name__ == "__main__":
