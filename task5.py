@@ -17,9 +17,10 @@ class Iterator:
             self.counter += 1
             return self.names[self.counter - 1]
         else:
-            raise StopIteration
+            self.counter = 0
+            return self.names[self.counter]
 
-    def init(self, base: str, name: str, path: str):
+    def init(self, base: str, name: str, path: str)->None:
         if not "dataset" in path:
             raise ("error")
         self.path = path
@@ -32,14 +33,14 @@ class Iterator:
         self.limit = len(self.names)
         self.counter = 0
 
-    def clear(self):
+    def clear(self)->None:
         self.counter = 0
 
-    def setName(self, name: str):
+    def setName(self, name: str)->None:
         self.init(self.base, name, self.path)
-    def getName(self):
+    def getName(self)->None:
        print(self.name)
 
 
-    def setPath(self, path: str):
+    def setPath(self, path: str)->None:
         self.init(self.base, self.name, path)

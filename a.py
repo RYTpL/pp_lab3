@@ -12,13 +12,15 @@ from PyQt6.QtCore import QSize
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import QWidget, QTabWidget, QVBoxLayout, QLabel, QRadioButton, QButtonGroup
 from PyQt6.QtWidgets import QMessageBox
-from task1 import run1
-from task2 import run2
-from task3 import run3
+from task1 import runtask1
+from task2 import runtask2
+from task3 import runtask3
 from task5 import Iterator
 
+
 class Ui_MainWindow(QWidget):
-    def setupUi(self, MainWindow):
+    """Main function with with the code of operation of two windows"""
+    def setupUi(self, MainWindow)->None:
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(200, 582)
         self.directory = None
@@ -53,7 +55,8 @@ class Ui_MainWindow(QWidget):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, MainWindow)->None:
+        """open and work first window"""
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.pushButton_2.setText(_translate("MainWindow", "task1"))
@@ -69,37 +72,42 @@ class Ui_MainWindow(QWidget):
         # tsaks-end
         self.pushButton_6.clicked.connect(self.opensecondwindow)
 
-    def get_directory(self):
+    def get_directory(self)->None:
+        """open directory for first 3 tasks"""
         self.directory = QtWidgets.QFileDialog.getExistingDirectory(self, "Выбрать папку исходного датасета")
         os.chdir(self.directory)
 
-    def task1(self):
-        run1(self.directory, 'bay horse', 'annotationbayhorse')
-        run1(self.directory, 'zebra', 'annotationzebra')
+    def task1(self)->None:
+        """created annotation for datasets, token task1.py from lab2"""
+        runtask1(self.directory, 'bay horse', 'annotationbayhorse')
+        runtask1(self.directory, 'zebra', 'annotationzebra')
         
-    def task2(self):
-        run2(self.directory, 'directoryTask1', 'annotationTask2')
+    def task2(self)->None:
+        """created annotation for directory, token task2.py from lab2"""
+        runtask2(self.directory, 'directoryTask1', 'annotationTask2')
 
-    def task3(self):
-        run3(self.directory, 'annotationTask3.csv', 'directorycopy')
+    def task3(self)->None:
+        """task 3 form lab2, token task3.py from lab2"""
+        runtask3(self.directory, 'annotationTask3.csv', 'directorycopy')
     
-    def opensecondwindow(self):
+    def opensecondwindow(self)->None:
+        """open window with picturies"""
         window = ClassWindow(self)
         window.exec()
 
 class ClassWindow(QtWidgets.QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None)->None:
         super(ClassWindow, self).__init__(parent)
-        self.iter = Iterator("D:\\pp_lab3\\pp_lab3", "zebra", "dataset")
+        self.iter = Iterator(os.path.join("D:\\","pp_lab3","pp_lab3"), "zebra", "dataset")
         self.pixelmap = QPixmap('.jpg')
         self.resize(900,1500)
         self.gorizontalLayout = QtWidgets.QFormLayout(self)
         self.gorizontalLayout.setObjectName("gorizontalLayout")
         self.pushButton = QtWidgets.QPushButton(self)
         self.pushButton.setObjectName("pushButton")
-        self.pushButton.setGeometry(QtCore.QRect(200, 200, 200, 50))
+        self.pushButton.setGeometry(QtCore.QRect(50, 50, 50, 50))
         self.setLayout(self.gorizontalLayout)
-        self.setGeometry(400, 400, 400, 400)
+        self.setGeometry(50, 50, 50, 50)
 
         self.pushButton_3 = QtWidgets.QPushButton(self)
         self.pushButton_3.setObjectName("pushButton_3")
@@ -114,7 +122,7 @@ class ClassWindow(QtWidgets.QDialog):
         self.pushButton_3.clicked.connect(self.btnClosed)
         self.gorizontalLayout.addWidget(self.pushButton_3)
 
-        pixmap = QPixmap("D:\\pp_lab3\\pp_lab3\\dataset\\zebra\\0015.jpg").scaledToHeight(400).scaledToWidth(400)
+        pixmap = QPixmap(os.path.join("D:\\","pp_lab3","pp_lab3","dataset","zebra","0419.jpg")).scaledToHeight(400).scaledToWidth(400)
         self.lable = QLabel(self)
 
         self.lable.setPixmap(pixmap)
@@ -133,7 +141,7 @@ class ClassWindow(QtWidgets.QDialog):
         self.radio_button_1.clicked.connect(self.clickButton)
         self.radio_button_2.clicked.connect(self.clickButton)
 
-    def clickButton(self):
+    def clickButton(self)->None:
         send = self.sender()
         if send.text() == "zebra":
             self.iter.setName(send.text())
@@ -146,10 +154,8 @@ class ClassWindow(QtWidgets.QDialog):
     def nextButton(self,) ->None:
         try:
             tmp = os.path.join(os.path.join(self.iter.base,self.iter.path,self.iter.name), self.iter.__next__())
-            print(tmp)
             self.pixmap = QPixmap(f"{tmp}").scaledToWidth(400).scaledToHeight(400)
             self.lable.setPixmap(self.pixmap)
-            print(tmp)
         except:
             reply = QMessageBox.question(self, 'End of img_class',
                                          "empry, clear?", QMessageBox.Yes |
@@ -159,7 +165,7 @@ class ClassWindow(QtWidgets.QDialog):
             print("Error")
 
 
-    def btnClosed(self):
+    def btnClosed(self)->None:
         self.close()
 
 

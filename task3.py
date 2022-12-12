@@ -24,11 +24,12 @@ def create_randomname_file(base: str, annotation_name:str, dir_copy: str)->None:
             shutil.copy(os.path.join(os.path.join(base, "dataset", base_class),file_name),  os.path.join(dir_copy, f"{file_number[counter]}.jpg"))
 
             with open(os.path.join(dir_copy, annotation_name), mode="a", newline='') as file:
-                file_writer = csv.writer(file, delimiter=",")
+                file_writer = csv.writer(file, delimiter=" ")
+                file_writer.writerow(['file name', 'Dataset name'])
                 file_writer.writerow([f"{file_number[counter]}.jpg", base_class])
             counter+=1
 
 
-def run3(base: str, dir_copy: str, annotation_name:str)->None:
+def runtask3(base: str, dir_copy: str, annotation_name:str)->None:
     ''' This function call previous to run it in main'''
     create_randomname_file(base, annotation_name, dir_copy)

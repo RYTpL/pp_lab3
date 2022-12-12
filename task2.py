@@ -20,10 +20,11 @@ def create_copy_dataset(base: str, dir_copy: str, annotation_name: str) -> None:
                         file_name), os.path.join(dir_copy, f"{dataset_item}_{file_name}"))
         with open(os.path.join(dir_copy, annotation_name), mode="a", encoding="UTF-16", newline='') as file:
             file_writer = csv.writer(file, delimiter=",")
+            file_writer.writerow(['file name', 'Dataset name'])
             for file_name in files_list:
                 file_writer.writerow([f"{dataset_item}_{file_name}", dataset_item])
 
 
-def run2(base: str, dir_copy: str, annotation_name: str) -> None:
+def runtask2(base: str, dir_copy: str, annotation_name: str) -> None:
     ''' This function call previous to run it in main'''
     create_copy_dataset(base, dir_copy, annotation_name)
