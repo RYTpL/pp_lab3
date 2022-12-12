@@ -22,7 +22,8 @@ def create_copy_dataset(base: str, dir_copy: str, annotation_name: str) -> None:
             file_writer = csv.writer(file, delimiter=",")
             file_writer.writerow(['file name', 'Dataset name'])
             for file_name in files_list:
-                file_writer.writerow([f"{dataset_item}_{file_name}", dataset_item])
+                file_writer.writerow(
+                    [f"{dataset_item}_{file_name}", dataset_item])
 
 
 def runtask2(base: str, dir_copy: str, annotation_name: str) -> None:

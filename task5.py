@@ -20,12 +20,12 @@ class Iterator:
             self.counter = 0
             return self.names[self.counter]
 
-    def init(self, base: str, name: str, path: str)->None:
+    def init(self, base: str, name: str, path: str) -> None:
         if not "dataset" in path:
             raise ("error")
         self.path = path
         self.name = name
-        self.names =  os.listdir(os.path.join(base, self.path, self.name))
+        self.names = os.listdir(os.path.join(base, self.path, self.name))
 
         for i in self.names:
             if not ".jpg" in i:
@@ -33,14 +33,14 @@ class Iterator:
         self.limit = len(self.names)
         self.counter = 0
 
-    def clear(self)->None:
+    def clear(self) -> None:
         self.counter = 0
 
-    def setName(self, name: str)->None:
+    def setName(self, name: str) -> None:
         self.init(self.base, name, self.path)
-    def getName(self)->None:
-       print(self.name)
 
+    def getName(self) -> None:
+        print(self.name)
 
-    def setPath(self, path: str)->None:
+    def setPath(self, path: str) -> None:
         self.init(self.base, self.name, path)

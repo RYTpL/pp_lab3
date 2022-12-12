@@ -8,7 +8,8 @@ def create_csv_annotation(base: str, class_name: str, annotation_name: str) -> N
     class_names = os.listdir(path_to_class)
     with open(annotation_name, mode="w", newline='') as file:
         file_writer = csv.writer(file, delimiter=",")
-        file_writer.writerow(['Absolute path to the file', 'The path to the file relative to the executable code', 'Dataset name'])
+        file_writer.writerow(['Absolute path to the file',
+                             'The path to the file relative to the executable code', 'Dataset name'])
         for name in class_names:
             file_writer.writerow(
                 [os.path.abspath(name), os.path.join('dateset', class_name, name), class_name])
