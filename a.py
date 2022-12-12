@@ -107,7 +107,7 @@ class ClassWindow(QtWidgets.QDialog):
 
 
         self.gorizontalLayout.addWidget(self.pushButton)
-        self.setWindowTitle("ImageTask")
+        self.setWindowTitle("Image")
         self.pushButton.setText("Next")
         self.pushButton.clicked.connect(self.nextButton)
         self.pushButton_3.setText("Close")
