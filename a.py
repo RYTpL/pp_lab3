@@ -12,6 +12,7 @@ from PyQt6.QtCore import QSize
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import QWidget, QTabWidget, QVBoxLayout, QLabel, QRadioButton, QButtonGroup
 from PyQt6.QtWidgets import QMessageBox
+
 from task1 import runtask1
 from task2 import runtask2
 from task3 import runtask3
@@ -22,6 +23,7 @@ class Ui_MainWindow(QWidget):
     """Main function with with the code of operation of two windows"""
 
     def setupUi(self, MainWindow) -> None:
+        """creATE window with specifications"""
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(200, 582)
         self.directory = None
