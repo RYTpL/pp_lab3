@@ -9,3 +9,5 @@ annotationTask3.csv/
 main.py
 
 task4.py
+
+__pycache__/
