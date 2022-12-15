@@ -23,7 +23,7 @@ class Ui_MainWindow(QWidget):
     """Main function with with the code of operation of two windows"""
 
     def setupUi(self, MainWindow) -> None:
-        """creATE window with specifications"""
+        """create window with specifications"""
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(200, 582)
         self.directory = None
@@ -150,6 +150,7 @@ class ClassWindow(QtWidgets.QDialog):
         self.radio_button_2.clicked.connect(self.clickButton)
 
     def clickButton(self) -> None:
+        """changes the class of displayed images"""
         send = self.sender()
         if send.text() == "zebra":
             self.iter.setName(send.text())
@@ -159,6 +160,7 @@ class ClassWindow(QtWidgets.QDialog):
             self.iter.getName()
 
     def nextButton(self) -> None:
+        """the program of the button responsible for switching images"""
         try:
             tmp = os.path.join(os.path.join(
                 self.iter.base, self.iter.path, self.iter.name), self.iter.__next__())
@@ -178,7 +180,7 @@ class ClassWindow(QtWidgets.QDialog):
 
 
 if __name__ == "__main__":
-
+    """min, calls all the prescribed functions"""
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
